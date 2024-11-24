@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  symfony:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        - USER_ID=${USER_ID:-1000}
+        - USER_NAME=${USER_NAME:-appuser}
+    container_name: symfony
+    environment:
+      TZ: ${TIMEZONE:-Europe/Amsterdam}
+    extra_hosts:
+        - 'host.docker.internal:host-gateway'      
+    ports:
+        - '9003:9003'      
+    env_file:
+      - .env
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - moneymonkey_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ./data/db/mysql:/var/lib/mysql
+    networks:
+      - moneymonkey_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+      - "8443:443"      
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/certs:/etc/nginx/certs      
+      - .:/var/www/html
+    depends_on:
+      - symfony
+    networks:
+      - moneymonkey_network
+
+networks:
+  moneymonkey_network:
+    name: moneymonkey_network
