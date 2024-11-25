@@ -65,6 +65,7 @@ RUN sed -i 's/^user = .*/; user = www-data/' /usr/local/etc/php-fpm.d/www.conf &
     
 # Alias
 RUN echo 'alias sf="php /var/www/html/symfony/bin/console"' >> /home/$USER_NAME/.bashrc
+RUN echo 'alias sfr="sf debug:router --show-controllers |grep moneymonkey"' >> /home/$USER_NAME/.bashrc
 
 # Set the working directory
 WORKDIR /var/www/html/symfony
