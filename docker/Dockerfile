@@ -62,6 +62,9 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 # Adjust PHP-FPM configuration for non-root user
 RUN sed -i 's/^user = .*/; user = www-data/' /usr/local/etc/php-fpm.d/www.conf && \
     sed -i 's/^group = .*/; group = www-data/' /usr/local/etc/php-fpm.d/www.conf
+    
+# Alias
+RUN echo 'alias sf="php /var/www/html/symfony/bin/console"' >> /home/$USER_NAME/.bashrc
 
 # Set the working directory
 WORKDIR /var/www/html/symfony
