@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
 {
-	"name": "Existing Docker Compose (Extend)",
+	"name": "Symfony",
 
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
@@ -16,11 +16,21 @@
 
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/var/www/html/symfony",
+	"workspaceFolder": "/var/www/html",
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"DEVSENSE.phptools-vscode",
 				"xdebug.php-debug",
+				"esbenp.prettier-vscode",
+				"formulahendry.auto-rename-tag",
+				"bradlc.vscode-tailwindcss",
+				"DEVSENSE.composer-php-vscode",
+				"DEVSENSE.intelli-php-vscode",
+				"ms-azuretools.vscode-docker",
+				"tahabasri.snippets",
+				"ms-vscode.test-adapter-converter",
+				"redhat.vscode-yaml",
 				"ms-azuretools.vscode-docker",
 				"Vue.volar"
 			]

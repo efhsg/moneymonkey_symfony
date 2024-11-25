@@ -30,11 +30,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Create Xdebug configuration file
-RUN echo "zend_extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN echo "zend_extension=xdebug.so" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -58,6 +58,10 @@ RUN adduser --uid $USER_ID --disabled-password --gecos "" $USER_NAME \
 
 # Copy php.ini to the CLI configuration directory
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
+# Adjust PHP-FPM configuration for non-root user
+RUN sed -i 's/^user = .*/; user = www-data/' /usr/local/etc/php-fpm.d/www.conf && \
+    sed -i 's/^group = .*/; group = www-data/' /usr/local/etc/php-fpm.d/www.conf
 
 # Set the working directory
 WORKDIR /var/www/html/symfony
