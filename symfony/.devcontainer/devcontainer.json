@@ -6,7 +6,7 @@
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
 	"dockerComposeFile": [
-		"../docker-compose.yml",
+		"../../docker-compose.yml",
 		"docker-compose.yml"
 	],
 
@@ -16,11 +16,13 @@
 
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/var/www/html",
+	"workspaceFolder": "/var/www/html/symfony",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-azuretools.vscode-docker"
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker",
+				"Vue.volar"
 			]
 		}
 	}
