@@ -32,7 +32,8 @@
 				"ms-vscode.test-adapter-converter",
 				"redhat.vscode-yaml",
 				"ms-azuretools.vscode-docker",
-				"Vue.volar"
+				"Vue.volar",
+				"mblode.twig-language-2"
 			]
 		}
 	}
